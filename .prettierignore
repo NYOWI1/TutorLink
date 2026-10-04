@@ -1,0 +1,8 @@
+.next
+node_modules
+.data
+package-lock.json
+public/screenshots
+instruction.md
+AGENTS.md
+CLAUDE.md
