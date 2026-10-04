@@ -37,7 +37,7 @@ npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000), or the port printed by Next.js if 3000 is occupied. For tests on another port, set `TEST_ORIGIN=http://localhost:3001`.
 
 `npm run dev` starts an actual local MongoDB single-node replica set on port 27018, seeds sample data when the users collection is empty, then starts Next.js. Database files persist in the ignored `.data/mongo` directory. Stop with Ctrl+C. A development-only JWT secret is generated at startup; restarting signs users out but preserves their data.
 
@@ -120,7 +120,12 @@ npm test
 npm run test:e2e
 ```
 
-Browser tests cover registration, user/post/booking CRUD, ownership checks, self-booking rejection, overlapping reservations, status changes, search, and mobile overflow/navigation. `CHROME_PATH` can override the Chrome executable path in `playwright.config.ts` for Linux or other installations.
+Six unit tests and three browser/API tests pass. They cover registration, user/post/booking CRUD, ownership checks, self-booking rejection, concurrent overlapping reservations, rejection and completion, status changes, search, and mobile overflow/navigation. The deployed HTTPS app also passed registration, login, profile editing, post creation, booking, acceptance, cancellation, deletion, origin validation, and mobile checks; temporary smoke-test data was removed.
+Production verification: `SMOKE_ORIGIN=https://nyxen.centralindia.cloudapp.azure.com/tutorlink npm run test:production`. This creates temporary test accounts and deletes them after verification.
+
+Regenerate screenshots with `npm run screenshots` while local development is running; set `SCREENSHOT_ORIGIN` if it uses another port.
+
+`CHROME_PATH` can override the Chrome executable path in `playwright.config.ts` for Linux or other installations.
 
 ## Screenshots
 
@@ -144,6 +149,6 @@ The MongoDB Docker network is internal and its port is not published. The app ex
 
 ## Production URL and submission
 
-Production target: [TutorLink on the VM](https://nyxen.centralindia.cloudapp.azure.com/tutorlink). Deployment access and live operation still need verification.
+Production target: [TutorLink on the VM](https://nyxen.centralindia.cloudapp.azure.com/tutorlink). Deployed and verified over HTTPS on 5 October 2026 (Bangkok time). The app and MongoDB run in separate containers on the supplied VM, with TutorLink served through the existing Nginx certificate at `/tutorlink`.
 
 A scope-matching [proposal draft](docs/PROPOSAL.md) is included. The team must submit the proposal on time, maintain its own Git history, and record the required approximately five-minute demonstration.

@@ -8,7 +8,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
 const origin = process.env.SCREENSHOT_ORIGIN || 'http://localhost:3000';
 await page.goto(origin + '/login?demo=1');
 await page.getByLabel('Email address').fill('maya@tutorlink.demo');
-await page.getByLabel('Password', {exact:true}).fill('TutorLink2026!');
+await page.getByLabel('Password', { exact: true }).fill('TutorLink2026!');
 await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 await page.getByRole('heading', { name: /Hey, Maya/ }).waitFor();
 for (const [path, file, heading] of [
@@ -27,7 +27,11 @@ for (const [path, file, heading] of [
   await page.screenshot({ path: `public/screenshots/${file}.png`, fullPage: true });
 }
 const posts = await page.request.get(origin + '/api/posts?q=Java').then((r) => r.json());
-await page.goto(origin + '/posts/' + posts[0]._id);
+await page.goto(
+  origin +
+    '/posts/' +
+    posts.find((post: { title: string }) => post.title === 'Java & OOP, made simple')._id,
+);
 await page.getByRole('heading', { name: 'Java & OOP, made simple', exact: true }).waitFor();
 await page.waitForLoadState('networkidle');
 await page.screenshot({ path: 'public/screenshots/post-details.png', fullPage: true });

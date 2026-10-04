@@ -11,7 +11,10 @@
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed.ts",
     "test": "node --import tsx --test tests/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "screenshots": "node --import tsx scripts/screenshots.ts",
+    "test:production": "node --import tsx scripts/production-smoke.ts",
+    "format": "prettier --write app components lib models scripts tests next.config.ts playwright.config.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

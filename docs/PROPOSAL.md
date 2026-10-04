@@ -27,9 +27,9 @@ Online payments, ratings, reviews, real-time chat, video calling, AI recommendat
 
 ## Team and submission
 
-- KAUNG ZAW HEIN — https://github.com/NYOWI1
-- MOE MYINT CHO — https://github.com/MoeMyintCho
-- SHAUN LAI KYAW SAN — https://github.com/SHAUN14487
+- KAUNG ZAW HEIN — [GitHub](https://github.com/NYOWI1)
+- MOE MYINT CHO — [GitHub](https://github.com/MoeMyintCho)
+- SHAUN LAI KYAW SAN — [GitHub](https://github.com/SHAUN14487)
 
 Repository: https://github.com/NYOWI1/TutorLink
 

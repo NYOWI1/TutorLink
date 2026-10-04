@@ -55,4 +55,4 @@ Restore: `docker compose exec -T mongo mongorestore --archive --gzip < tutorlink
 
 ## Deployment status
 
-The files are prepared for VM deployment. The target is nyxen.centralindia.cloudapp.azure.com and the repository is https://github.com/NYOWI1/TutorLink. A live deployment requires verified SSH access and has not yet been performed or verified.
+The application is deployed at https://nyxen.centralindia.cloudapp.azure.com/tutorlink. The original Nginx configuration was backed up before adding the TutorLink include. The target is nyxen.centralindia.cloudapp.azure.com and the repository is https://github.com/NYOWI1/TutorLink. Deployed and verified on 5 October 2026 (Bangkok time). Application and MongoDB containers are healthy. The production HTTPS smoke test passed registration, login, profile update, post creation, booking, acceptance, cancellation, deletion, origin validation, and mobile layout. Temporary test accounts and their associated data were deleted after verification.
