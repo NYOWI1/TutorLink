@@ -8,7 +8,7 @@ A peer tutoring social marketplace for university students. Every member can bot
 - MOE MYINT CHO — [GitHub](https://github.com/MoeMyintCho)
 - SHAUN LAI KYAW SAN — [GitHub](https://github.com/SHAUN14487)
 
-Repository: [NYOWI1/TutorLink](https://github.com/NYOWI1/TutorLink). Each team member should contribute their own meaningful commits.
+Repository: [NYOWI1/TutorLink](https://github.com/NYOWI1/TutorLink).
 
 ## Features
 
@@ -27,6 +27,30 @@ Payment processing, ratings, reviews, real-time chat, and video calls are outsid
 ## Technology stack
 
 Next.js App Router, React, TypeScript, Mongoose/MongoDB, Zod, bcrypt, signed JWT sessions, and Lucide icons. Playwright tests run through Chrome. CSS creates the book illustration without external image assets.
+
+## Project structure
+
+```text
+TutorLink/
+├── src/
+│   ├── app/           # Next.js pages, layouts, and REST API routes
+│   ├── components/    # Shared interface and feature screens
+│   ├── lib/           # Authentication, database connection, API logic, validation, types
+│   └── models/        # User, TutorPost, and Booking schemas
+├── public/            # Static assets and README screenshots
+├── scripts/           # Local development, optional seeding, screenshots, production checks
+├── tests/             # Unit and browser/API tests
+├── deploy/            # Nginx snippets and environment examples
+├── docs/              # Proposal, deployment, and optional Atlas instructions
+├── compose.yaml       # VM containers; supports MONGODB_URI override
+├── Dockerfile
+├── .env.example       # Template only; actual environment files stay untracked
+└── package.json
+```
+
+Pages use individual route files (`src/app/posts/[id]/page.tsx`, for example), so unknown URLs receive a proper 404 response. Configuration and environment files remain at the project root.
+
+Generated local folders (`.data`, `.next`, and test reports) are excluded from Git and may be removed when local development is stopped. The local demo database is recreated when `npm run dev` runs without an external URI. `node_modules` contains required dependencies and is retained.
 
 ## Get started
 
@@ -50,17 +74,19 @@ The other seeded accounts (`james`, `sofia`, `arun`, `nina`, `theo` at `tutorlin
 
 ### Use your own MongoDB
 
+The live app was subsequently configured to use the requested Atlas cluster. Local development keeps its separate demo database unless `.env.local` specifies a different connection. See [Atlas setup](docs/ATLAS.md) for that optional configuration.
+
 Use a **replica set**, because booking creation and cascading deletion use transactions. Set `MONGODB_URI` and `JWT_SECRET` in `.env.local`, then run `npm run dev:external` to start Next.js without the bundled MongoDB launcher. `npm run seed` accepts an exported `MONGODB_URI` if you want demo data in an external development database; it only seeds an empty database.
 
 ## Environment variables
 
 See `.env.example`. Keep actual secrets in ignored environment files.
 
-| Variable      | Purpose                                                                             |
-| ------------- | ----------------------------------------------------------------------------------- |
-| `MONGODB_URI` | Connection string for a self-hosted MongoDB replica set                             |
-| `JWT_SECRET`  | Random secret of at least 32 characters; generate with `openssl rand -hex 48`       |
-| `APP_ORIGIN`  | Exact browser origin, including scheme and port; use the HTTPS domain in production |
+| Variable      | Purpose                                                                               |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `MONGODB_URI` | Connection string for MongoDB (self-hosted replica set or the optional Atlas cluster) |
+| `JWT_SECRET`  | Random secret of at least 32 characters; generate with `openssl rand -hex 48`         |
+| `APP_ORIGIN`  | Exact browser origin, including scheme and port; use the HTTPS domain in production   |
 
 `npm run build` compiles the production app. `npm start` runs the build with the environment from `.env.local` or exported variables. Production session cookies require HTTPS; use the provided Nginx deployment.
 

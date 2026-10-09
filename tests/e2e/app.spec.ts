@@ -5,21 +5,24 @@ test('marketplace is responsive and search works', async ({ page }) => {
   await expect(
     page.getByRole('heading', { name: 'Web development, one step at a time' }),
   ).toBeVisible();
-  await page.screenshot({ path: 'public/screenshots/home.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/screenshots/home.png', fullPage: true });
   await page.goto('/explore');
   await page.getByRole('textbox', { name: 'Search posts' }).fill('calculus');
   await expect(page.getByRole('heading', { name: 'Calculus without the confusion' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Java & OOP, made simple' })).toHaveCount(0);
   await page.getByRole('textbox', { name: 'Search posts' }).fill('');
   await expect(page.getByRole('heading', { name: 'Java & OOP, made simple' })).toBeVisible();
-  await page.screenshot({ path: 'public/screenshots/explore.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/screenshots/explore.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Find your learning connection.' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-  await page.screenshot({ path: 'public/screenshots/mobile.png', fullPage: true });
+  await page.screenshot({ path: 'test-results/screenshots/mobile.png', fullPage: true });
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await expect(page.getByRole('link', { name: 'Explore tutors', exact: true })).toBeVisible();
+  const missing = await page.goto('/this-page-does-not-exist');
+  expect(missing?.status()).toBe(404);
+  await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 });
 test('register, profile CRUD, post CRUD and booking workflow enforce ownership', async ({
   browser,
@@ -53,7 +56,7 @@ test('register, profile CRUD, post CRUD and booking workflow enforce ownership',
   await t.getByRole('button', { name: 'Publish tutoring post' }).click();
   await expect(t.getByRole('heading', { name: 'Test Java Fundamentals' })).toBeVisible();
   const postId = t.url().split('/').pop()!;
-  await t.screenshot({ path: 'public/screenshots/post-details.png', fullPage: true });
+  await t.screenshot({ path: 'test-results/screenshots/post-details.png', fullPage: true });
   expect(
     (await s.request.put('/api/posts/' + postId, { data: { title: 'Hacked' } })).status(),
   ).toBe(400);

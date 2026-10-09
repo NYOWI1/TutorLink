@@ -1,6 +1,6 @@
 import { test, expect, request as playwrightRequest } from '@playwright/test';
 import mongoose from 'mongoose';
-import Booking from '../../models/Booking';
+import Booking from '../../src/models/Booking';
 const origin = process.env.TEST_ORIGIN || 'http://localhost:3000';
 test('booking concurrency, rejection, completion, privacy and account cascades', async () => {
   test.skip(!origin.includes('localhost'), 'This fixture test uses the local development database');

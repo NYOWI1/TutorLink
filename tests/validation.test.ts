@@ -7,7 +7,7 @@ import {
   validateSession,
   canTransition,
   overlaps,
-} from '../lib/validation';
+} from '../src/lib/validation';
 const post = { availableDays: ['Monday'], availableTimes: { start: '09:00', end: '18:00' } };
 const data = {
   tutorPostId: 'a'.repeat(24),

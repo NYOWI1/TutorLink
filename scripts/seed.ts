@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import User from '../models/User';
-import TutorPost from '../models/TutorPost';
-import Booking from '../models/Booking';
+import User from '../src/models/User';
+import TutorPost from '../src/models/TutorPost';
+import Booking from '../src/models/Booking';
 export async function seed() {
   if ((await User.countDocuments()) > 0) return;
   const password = await bcrypt.hash('TutorLink2026!', 12);

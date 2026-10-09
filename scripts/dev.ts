@@ -4,6 +4,12 @@ import { mkdir } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
 import mongoose from 'mongoose';
 import { seed } from './seed';
+// Load local configuration before selecting the database; Next.js starts later.
+try {
+  process.loadEnvFile('.env.local');
+} catch (error) {
+  if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+}
 let mongo: MongoMemoryReplSet | undefined;
 if (!process.env.MONGODB_URI) {
   await mkdir('.data/mongo', { recursive: true });
@@ -18,7 +24,7 @@ if (!process.env.MONGODB_URI) {
 process.env.JWT_SECRET ||= randomBytes(48).toString('hex');
 process.env.APP_ORIGIN ||= 'http://localhost:3000';
 await mongoose.connect(process.env.MONGODB_URI!);
-await seed();
+if (mongo) await seed();
 await mongoose.disconnect();
 const child = spawn(
   process.execPath,
